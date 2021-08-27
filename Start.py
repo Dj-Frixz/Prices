@@ -1,4 +1,4 @@
-from os import system, get_terminal_size, write
+from os import system, get_terminal_size
 
 while(True):
     text_offset = int((get_terminal_size()[0]-48)/2)
