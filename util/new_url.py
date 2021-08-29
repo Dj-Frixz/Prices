@@ -27,6 +27,7 @@ def Save(url):
 		name = input("Write a name to identify it in the future: ")	
 		dict['domain'].append({'name': domain_name, 'item': [{'identifier': name, 'url': url}]})
 		Load(dict)
+		
 		return 'link successfully added :)'
 
 def Search_correspondence(tofind, list, key):
