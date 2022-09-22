@@ -56,9 +56,12 @@ def delete_url():
         return None
     else:
         choose_domain()
+        print('\n\n')
         dom_num = int(input())
         clear()
+        print('Choose an item:\n')
         choose_url(dict['domain'][dom_num]['item'])
+        print('\n\n')
         item_num = int(input())
         clear()
         erased_url = dict['domain'][dom_num]['item'][item_num]['identifier']
@@ -80,9 +83,12 @@ def choose():
         return None
     else:
         choose_domain()
+        print('\n\n')
         dom_num = int(input())
         clear()
+        print('Choose an item:\n')
         choose_url(dict['domain'][dom_num]['item'])
+        print('\n\n')
         item_num = int(input())
         clear()
         return dict['domain'][dom_num]['item'][item_num]['url']
@@ -92,18 +98,12 @@ def choose_domain():
     for i in range(0,n):
         name = dict['domain'][i]['name']
         print(f'{i} - {name}')
-    print('\n\n')
-    return
 
 def choose_url(list):
-    print('Choose an item:\n')
     n = len(list)
     for i in range(0,n):
         name = list[i]['identifier']
         print(f'{i} - {name}')
-    print('\n\n')
-
-
 
 options = {
     0 : show_price,

@@ -1,8 +1,9 @@
-from requests import get
+import requests
 from re import search
 from random import choice
+from bs4 import BeautifulSoup
 from util.headers import headers, user_agent_list
-import csv
+#import csv
 
 def Get_price(url):
     save_path = r"data\prices_history.csv"
@@ -14,21 +15,39 @@ def Get_price(url):
     pos = -1
     if domain[8:domain[8:].find('/')] != 'amazon':
         headers[0]['user-agent'] = choice(user_agent_list)
-        page = get(url, headers=headers[0])#, proxies=proxies)
+        page = requests.get(url, headers=headers[0])#, proxies=proxies)
         pos = page.text.find('price:')
         if pos==-1:
             pos = page.text.find('price"')
     if page.status_code!=200 or pos==-1:
         headers[1]['user-agent'] = choice(user_agent_list)
-        page = get(url, headers=headers[1])
+        page = requests.get(url, headers=headers[1])
         pos = page.text.find('price:')
         if pos==-1:
             pos = page.text.find('price"')
     price = search(r'\d+[.,]\d{2}', page.text[pos:])[0]
-    prices = []
-    prices.append(price)
+    #prices = []
+    #prices.append(price)
 
-    with open(save_path, 'w', newline='') as file:
-            writer=csv.writer(file)
-            writer.writerow(prices)
-    return price
+    #with open(save_path, 'w', newline='') as file:
+    #        writer=csv.writer(file)
+    #        writer.writerow(prices)
+    return float(price)
+
+def Get_price_cdkeys(url):
+    html = requests.get(url)
+    soup = BeautifulSoup(html.text,'html.parser')
+    return float(soup.find(property="product:price:amount")['content'])
+
+def Scrape_cdkeys(url):
+    html = requests.get(url)
+    soup = BeautifulSoup(html.text,'html.parser')
+    game = {
+        'domain':'cdkeys.com',
+        'title':soup.find(property="og:title")['content'],
+        'url':soup.find(property="og:url")['content'],
+        'price':float(soup.find(property="product:price:amount")['content']),
+        'currency':soup.find(property="product:price:currency")['content'],
+        'image':soup.find(property="og:image")['content']
+    }
+    return game

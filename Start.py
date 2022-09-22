@@ -1,8 +1,8 @@
 from os import system, get_terminal_size
+from util.menu import options
 
 while(True):
     text_offset = int((get_terminal_size()[0]-48)/2)
-    from util.menu import options
     system('COLOR 0E')
     print('Welcome to the\n\n\n')
     print(' '*text_offset+'                                     _')
@@ -12,13 +12,13 @@ while(True):
     print('Choose an option:\n')
     print(' '*text_offset+'0 - Choose url from list     1 - Add new url')
     print(' '*text_offset+'2 - Look at the url tree     3 - Modify the url list')
-    print(' '*text_offset+'4 - 5 - quit );')
+    print(' '*text_offset+'4 - quit );')
     print('\n\n\n\n')
 
-    n = int(input())
-    if n<0 or n>=len(options):
-        from time import sleep
-        from sys import stdout
+    n = input()
+    if len(n)!=1 or n<'0' or n>=f'{len(options)}':
+        #from time import sleep
+        #from sys import stdout
         system('cls && color 4e')
         message = 'So... you actually thought you could trick me like that?      Dumb move human'
         print(message)
@@ -33,4 +33,4 @@ while(True):
         system('pause & cls')
     else:
         lambda: system('cls')
-        options[n]()
+        options[int(n)]()
